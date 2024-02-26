@@ -1,11 +1,18 @@
-import SignIn from './SignIn';
-
+import SignIn from './components/SignIn';
+import LandingPage from './components/LandingPage'
+import {Menu} from 'antd'
+import NavBar from './components/NavBar';
+import Tickets from './components/Tickets'; 
 
 function App() {
-  return ( 
-    <SignIn/> 
+  return(
+    <>
 
-  );
+    
+    
+   <Tickets/> 
+    </>
+  )
 }
 
 export default App;

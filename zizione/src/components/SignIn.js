@@ -1,9 +1,11 @@
-import './SignIn.css';
+import '../styles/SignIn.css';
 import { Form,Input,Button  } from 'antd'; 
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { AuthContext } from '../AuthProvider';
 
 const SignIn = () =>  {
     const onFinish = (values) => {
+        AuthContext.login(values.username, values.password); 
         console.log('Received values of form: ', values);
     }; 
         

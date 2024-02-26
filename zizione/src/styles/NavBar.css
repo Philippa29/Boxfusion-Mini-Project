@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    align-items: center;
+    background-color: #EEEEEE; /* Background color of the header */
+    padding: 10px 20px; /* Adjust padding as needed */
+  }
+  
+  .logo img {
+    max-width: 100px; /* Set the maximum width for the logo image */
+    max-height: 100px; /* Set the maximum height for the logo image */
+  }
+  
+  .nav {
+    flex-grow: 1; /* Allow the navigation menu to take up the remaining space */
+    display: flex;
+    justify-content: center;
+  }
+  
+  .menu-items {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-items > .ant-menu-item {
+    margin: 0 10px;
+    background-color: #EEEEEE; /* Background color for menu items */
+  }
+  
+  .menu-items .ant-menu-item-selected {
+    background-color: #1890ff; /* Background color for the selected menu item */
+  }
+

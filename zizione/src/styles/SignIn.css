@@ -52,7 +52,7 @@
 }
 
 h1{
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 p{
   font-family:sans-serif ;
@@ -75,5 +75,5 @@ p{
 }
 
 #button:hover{
-  background-color: #F2AC57;
+  background-color: #fe849c;
 }
