@@ -1,21 +1,43 @@
 import '../styles/SignIn.css';
 import { Form,Input,Button  } from 'antd'; 
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { AuthContext } from '../AuthProvider';
+import { useState } from 'react';
+//import { AuthContext, AuthProvider , initialState, AuthReducer} from '../AuthProvider';
+//import { useContext, useReducer } from 'react';
+
 
 const SignIn = () =>  {
-    const onFinish = (values) => {
-        AuthContext.login(values.username, values.password); 
-        console.log('Received values of form: ', values);
-    }; 
+
+
+const user = require('../auth.json')
+    const [username , setUsername] = useState(''); 
+    const [password, setPassword ] = useState(''); 
+    
+     const onFinish = () => {
         
+        
+        if(user[1].username === username && user[1].password === password)
+        {
+           localStorage.setItem("access", true); 
+           console.log("access: ",localStorage.getItem("access"))
+        }
+        else
+        {
+            localStorage.setItem("access", false);
+            console.log("access: ",localStorage.getItem("access"))
+        }
+         
+        
+     }; 
+    
+
   
 return (<div className='body'> 
-    <div class = "image">
-      <img src="./logo.png" alt='logo'/>
+    <div className = "image">
+      <img src="./logo-no-background.png" alt='logo'/>
     </div>    
-      <div class = "outerbox">
-            <div class = "signin">
+      <div className = "outerbox">
+            <div className = "signin">
                 <h1>Sign in </h1>
                 <Form
                       name="normal_login"
@@ -34,7 +56,9 @@ return (<div className='body'>
                 },
                 ]}
                     >
-                 <Input id='email' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+                 <Input id='email' prefix={<UserOutlined className="site-form-item-icon" />} 
+                 placeholder="Email" 
+                 onChange={(e) => setUsername(e.target.value)}/>
                 </Form.Item>
 
                 <Form.Item
@@ -49,11 +73,12 @@ return (<div className='body'>
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
                 />
 
                 </Form.Item>
                 <Form.Item>
-                <Button id='button' type="primary" htmlType="submit" className="login-form-button">
+                <Button onClick={onFinish} id='button' type="primary" htmlType="submit" className="login-form-button">
                 Sign in
                 </Button>
                 

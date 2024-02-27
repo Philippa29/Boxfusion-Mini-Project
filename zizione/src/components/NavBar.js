@@ -1,25 +1,31 @@
 import React , {useState} from 'react'; 
-import { HomeFilled,SearchOutlined, UserOutlined} from '@ant-design/icons';
+import { HomeFilled,SearchOutlined, UserOutlined,ProfileFilled} from '@ant-design/icons';
 import '../styles/NavBar.css'
 import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     const items = [ 
         {
-            label: 'Home',
+            label: <Link to="/">Home</Link>,
             key: 'home',
             icon: <HomeFilled/> 
         }, 
         {
-            label: 'Ticket', 
+            label: <Link to="/ticket">Ticket</Link>, 
             key: 'Ticket', 
             icon: <SearchOutlined/> 
         }, 
         {
-            label: 'Sign in', 
+            label:<Link to="/signin">Sign in</Link>, 
             key: 'Sign in', 
             icon: <UserOutlined/> 
-        }
+        },
+        {
+          label:<Link to="/application">Application</Link>, 
+          key: 'Application', 
+          icon: <ProfileFilled /> 
+      }
 
 
     ] 
@@ -29,21 +35,20 @@ const NavBar = () => {
         setCurrent(e.key); 
     }; 
     return(
-        
-        <div className="header">
-  <div className="logo">
-    <img id="logo" src="./logo-no-background.png" alt="logo" />
-  </div>
-  <div className="nav">
-    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal">
-      {items.map((item) => (
-        <Menu.Item key={item.key} icon={item.icon}>
-          {item.label}
-        </Menu.Item>
-      ))}
-    </Menu>
-  </div>
+   
+    // <div style={{display:'grid', gridTemplateColumns: '1fr 1fr 1fr'}}> 
+    <div className="header">
+<div className="logo">
+<img id="logo" src="./logo-no-background.png" alt="logo" />
 </div>
+
+    <Menu mode="horizontal" items={items} style={{backgroundColor:'#EEEEEE'}}/>
+</div>
+
+    
+
+        
+
      ); 
  
 }

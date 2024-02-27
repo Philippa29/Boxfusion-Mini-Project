@@ -1,7 +1,9 @@
 .header {
-    display: flex;
-    align-items: center;
-    background-color: #EEEEEE; /* Background color of the header */
+    display: grid;
+    /* align-items: center; */
+    grid-template-columns: 25% 75%;
+    background-color: #EEEEEE;
+     /* Background color of the header */
     padding: 10px 20px; /* Adjust padding as needed */
   }
   
@@ -11,7 +13,8 @@
   }
   
   .nav {
-    flex-grow: 1; /* Allow the navigation menu to take up the remaining space */
+    /* flex-grow: 2;  */
+    /* Allow the navigation menu to take up the remaining space */
     display: flex;
     justify-content: center;
   }
@@ -27,6 +30,6 @@
   }
   
   .menu-items .ant-menu-item-selected {
-    background-color: #1890ff; /* Background color for the selected menu item */
+    background-color: #FF597B; /* Background color for the selected menu item */
   }
 

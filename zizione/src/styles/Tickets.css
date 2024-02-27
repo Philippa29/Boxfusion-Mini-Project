@@ -1,0 +1,22 @@
+#search{
+    max-width: 650px;
+    
+    
+
+    
+}
+
+#card{
+    width: 300px; 
+    border-color: black;
+    border-style: dashed;
+}
+#image_ticket{
+    border-color: black;
+    border-style: dashed;
+}
+
+p{
+    font-style: italic;
+    font-size: larger;
+}
