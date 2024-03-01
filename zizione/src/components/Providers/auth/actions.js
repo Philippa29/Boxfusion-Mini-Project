@@ -1,9 +1,12 @@
-import {createAction} from 'redux-actions'; 
-
-export const authActions={
-    LOGIN_SUCCESS: 'LOGIN_SUCCESS', 
-    LOGIN_FAILURE: 'LOGIN_FAILURE',
-    LOGOUT: 'LOGOUT'
-}
-
-export const setAuthAction = createAction(authActions.setAuthAction, (action)=> ({action})); 
+// actions.js
+export const login = (dispatch, authToken) => {
+    //console.log("authToken", authToken);
+    //console.log("dispatch", dispatch);
+    dispatch({ type: 'LOGIN', payload: authToken });
+  };
+  
+  export const logout = (dispatch) => {
+    dispatch({ type: 'LOGOUT' });
+  };
+  
+ 

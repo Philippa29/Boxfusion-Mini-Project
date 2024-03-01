@@ -1,0 +1,27 @@
+
+
+#Input{
+    width: 300px;
+}
+
+#application{
+
+   
+    margin-top: 50px;
+    margin-left: 500px;
+    width:650px; 
+    display: 'flex'; 
+    justify-content: center; 
+    align-items: 'center'; 
+    height: '100vh'; 
+}
+
+.login-form-button {
+    background-color: #FF597B;
+    position: 0 auto; 
+    width: 50%;
+  }
+  
+  #button:hover{
+    background-color: #fe849c;
+  }

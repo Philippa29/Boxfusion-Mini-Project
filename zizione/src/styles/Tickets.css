@@ -1,6 +1,6 @@
 #search{
     max-width: 650px;
-    
+    margin: 0 auto;
     
 
     
@@ -20,3 +20,24 @@ p{
     font-style: italic;
     font-size: larger;
 }
+#ticket{
+    width: 400px; 
+    background-color: #FF597B;
+    /*  */
+}
+#ticket-container{
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    
+}
+
+

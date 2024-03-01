@@ -5,17 +5,23 @@ import NavBar from './components/NavBar';
 import Tickets from './components/Tickets'; 
 import { BrowserRouter as Router , Routes , Route } from 'react-router-dom'
 import Application from './components/Application'; 
-
+import { AuthProvider } from './components/Providers/auth/AuthProvider';
+import {ErrorBoundary} from 'react-error-boundary';
+import FetchError from './components/FetchError';
 
 function App() {
+  
   return(
+<ErrorBoundary FallbackComponent={FetchError} onError={() => console.log("Error happended")}>
+  
+<AuthProvider>
     <Router>
 
         <NavBar> </NavBar>
         <Routes>
           
           <Route 
-          exact path='/' element={<LandingPage/>}> 
+          exact path='/' element={<LandingPage />}> 
           </Route>
         
         <Route
@@ -36,7 +42,8 @@ function App() {
     </Router>
 
     
- 
+ </AuthProvider>
+  </ErrorBoundary>
     
   )
 }

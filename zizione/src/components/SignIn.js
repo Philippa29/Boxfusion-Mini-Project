@@ -1,37 +1,41 @@
 import '../styles/SignIn.css';
 import { Form,Input,Button  } from 'antd'; 
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-//import { AuthContext, AuthProvider , initialState, AuthReducer} from '../AuthProvider';
-//import { useContext, useReducer } from 'react';
+import {  useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+import {useAuthActions} from './Providers/auth/AuthProvider';
+import { useErrorBoundary } from 'react-error-boundary';
+import FetchError from './FetchError';
 
 
-const SignIn = () =>  {
+const SignIn = ({setShowNavbar}) =>  {
+    const authToken = localStorage.getItem('authToken');
+const navigate = useNavigate();
+const [credentials, setCredentials] = useState({userNameOrEmailAddress: '', password: '',rememberClient: true});
+const [error, setError] = useState(null);
+
+const {showBoundary} = useErrorBoundary();
 
 
-const user = require('../auth.json')
-    const [username , setUsername] = useState(''); 
-    const [password, setPassword ] = useState(''); 
+
     
-     const onFinish = () => {
-        
-        
-        if(user[1].username === username && user[1].password === password)
-        {
-           localStorage.setItem("access", true); 
-           console.log("access: ",localStorage.getItem("access"))
-        }
-        else
-        {
-            localStorage.setItem("access", false);
-            console.log("access: ",localStorage.getItem("access"))
-        }
-         
-        
-     }; 
     
+    const { login } = useAuthActions();
 
   
+if(error){
+    return <FetchError></FetchError>
+}
+else
+{
+
+
+
+    
+
+
+
+
 return (<div className='body'> 
     <div className = "image">
       <img src="./logo-no-background.png" alt='logo'/>
@@ -45,7 +49,10 @@ return (<div className='body'>
                       initialValues={{
                         remember: true,
                       }}
-                      onFinish={onFinish}
+                      onFinish={()=>{
+                        console.log('credentials', login);
+                        login({...credentials}
+                        )}}
                 >
                 <Form.Item
                 name="username"
@@ -58,7 +65,7 @@ return (<div className='body'>
                     >
                  <Input id='email' prefix={<UserOutlined className="site-form-item-icon" />} 
                  placeholder="Email" 
-                 onChange={(e) => setUsername(e.target.value)}/>
+                 onChange={(e) => setCredentials({ ...credentials, userNameOrEmailAddress: e.target.value })}/>
                 </Form.Item>
 
                 <Form.Item
@@ -73,12 +80,13 @@ return (<div className='body'>
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                 />
 
                 </Form.Item>
                 <Form.Item>
-                <Button onClick={onFinish} id='button' type="primary" htmlType="submit" className="login-form-button">
+                
+                <Button onClick={ ()=> authToken? <Navigate to="/" />: login } id='button' type="primary" htmlType="submit" className="login-form-button">
                 Sign in
                 </Button>
                 
@@ -93,10 +101,12 @@ return (<div className='body'>
             </div>
 
       </div> 
-  </div>
+
+    
+    </div>
 ); 
 }; 
-
+}
 
 
 
