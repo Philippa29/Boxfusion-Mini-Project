@@ -41,7 +41,7 @@ return (<div className='body'>
       <img src="./logo-no-background.png" alt='logo'/>
     </div>    
       <div className = "outerbox">
-            <div className = "signin">
+            <div id = "signin">
                 <h1>Sign in </h1>
                 <Form
                       name="normal_login"

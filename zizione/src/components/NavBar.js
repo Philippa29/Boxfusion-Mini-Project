@@ -21,22 +21,18 @@ const NavBar = () => {
             key: 'Sign in', 
             icon: <UserOutlined/> 
         },
-        {
-          label:<Link to="/application">Application</Link>, 
-          key: 'Application', 
-          icon: <ProfileFilled /> 
-      }
+    //     {
+    //       label:<Link to="/application">Application</Link>, 
+    //       key: 'Application', 
+    //       icon: <ProfileFilled /> 
+    //   }
 
 
     ] 
-    const [current , setCurrent] = useState('home'); 
-    const onClick = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key); 
-    }; 
+   
     return(
    
-    // <div style={{display:'grid', gridTemplateColumns: '1fr 1fr 1fr'}}> 
+    
     <div className="header">
 <div className="logo">
 <img id="logo" src="./logo-no-background.png" alt="logo" />

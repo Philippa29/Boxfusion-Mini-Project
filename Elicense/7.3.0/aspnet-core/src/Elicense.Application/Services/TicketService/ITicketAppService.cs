@@ -15,7 +15,7 @@ namespace Elicense.Services.TicketService
         Task<TicketDto> GetAsync(Guid Id);
         Task<List<TicketDto>> GetAllAsync();
         Task<List<TicketDto>> GetByNationalId(string nationalId);
-        Task Delete(Guid id);
+        Task Delete(string id);
 
     }
 }

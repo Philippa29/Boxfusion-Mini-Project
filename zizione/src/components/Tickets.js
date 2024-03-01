@@ -1,6 +1,7 @@
 import "../styles/Tickets.css"
 import React, {  useState, useEffect } from 'react';
 import { Input , Card} from 'antd';
+import RequireAuth from './RequireAuth';
 
 
 
@@ -8,6 +9,7 @@ const {Search } = Input;
 const Tickets = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [tickets, setTickets] = useState([]);
+  const [searchPerformed, setSearchPerformed] = useState(false);
 
   const ticketTypeRefList = [
     { id: 1, name: 'None' },
@@ -21,30 +23,10 @@ const Tickets = () => {
     return foundType ? foundType.name : 'Unknown Type';
   };
 
-  const fetchTickets = async () => {
-    try {
-      const response = await fetch('https://localhost:44311/api/Ticket/Get', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
 
-      const result = await response.json();
-      setTickets(result); // Assuming the API response is an array of tickets
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
 
-  useEffect(() => {
-    // Fetch tickets on component mount
-    fetchTickets();
-  }, []);
 
   const onSearch = async () => {
     try {
@@ -64,10 +46,17 @@ const Tickets = () => {
       const jsonresponse = await response.json();
       console.log("result", jsonresponse.result);
       setTickets(jsonresponse.result); // Update the tickets based on the search results
+      setSearchPerformed(true);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+
+  const isValidNationalId = /^\d{13}$/.test(searchQuery);
+
+
+  //   return <p>Invalid National ID</p>
+  // }
 
   return (
     <div>
@@ -82,15 +71,28 @@ const Tickets = () => {
         />
       </div>
       <div id="ticket-container">
-        {tickets.map((ticket, i) => (
-          
-          <Card key={i} id="ticket" cover={<img id="drivers" alt="example" src="./car.png" />}>
-            <h1>{mapTicketType(ticket.ticketType)}</h1>
-            <p>Amount: {ticket.amount}</p>
-            <p>Points: {ticket.points}</p>
-          </Card>
-        ))}
+        {!isValidNationalId && searchPerformed ? (
+          <p>Invalid National ID</p>
+        ) : (
+          <>
+            {searchQuery && tickets && tickets.length ? (
+              tickets.map((ticket, i) => (
+                <Card key={i} id="ticket" cover={<img id="drivers" alt="example" src="./car.png" />}>
+                  <h1>{mapTicketType(ticket.ticketType)}</h1>
+                  <p>Amount: {ticket.amount}</p>
+                  <p>Points: {ticket.points}</p>
+                </Card>
+              ))
+            ) : null}
+            {searchPerformed && !tickets.length && (
+              <p>No tickets available</p>
+            )}
+          </>
+        )}
       </div>
+ 
+        
+
     </div>
   );
 };

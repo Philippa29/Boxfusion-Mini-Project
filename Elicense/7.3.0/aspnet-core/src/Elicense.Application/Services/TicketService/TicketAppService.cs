@@ -24,12 +24,12 @@ namespace Elicense.Services.TicketService
             _ticketRepository = ticketRepository;
         }
 
-        public Task Delete(Guid id)
+        public async Task Delete(string id)
         {
-            throw new NotImplementedException();
+            await _ticketRepository.DeleteAsync(m => m.NationalId == id);
         }
 
-        public async Task<TicketDto> GetAsync(Guid id)
+            public async Task<TicketDto> GetAsync(Guid id)
         {
             //linq statement 
             var ticket = await _ticketRepository.GetAllIncluding(m => m.NationalId)

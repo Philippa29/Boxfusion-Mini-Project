@@ -1,35 +1,53 @@
+/* Base styles */
 .header {
-    display: grid;
-    /* align-items: center; */
-    grid-template-columns: 25% 75%;
-    background-color: #EEEEEE;
-     /* Background color of the header */
-    padding: 10px 20px; /* Adjust padding as needed */
+  display: grid;
+  grid-template-columns: 25% 75%;
+  background-color: #EEEEEE;
+  padding: 10px 20px;
+}
+
+.logo img {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-items {
+  display: flex;
+  align-items: center;
+}
+
+.menu-items > .ant-menu-item {
+  margin: 0 10px;
+  background-color: #EEEEEE;
+}
+
+.menu-items .ant-menu-item-selected {
+  background-color: #FF597B;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 767px) {
+  .header {
+      grid-template-columns: 100%; /* Switch to a single column layout on smaller screens */
   }
-  
-  .logo img {
-    max-width: 100px; /* Set the maximum width for the logo image */
-    max-height: 100px; /* Set the maximum height for the logo image */
-  }
-  
+
   .nav {
-    /* flex-grow: 2;  */
-    /* Allow the navigation menu to take up the remaining space */
-    display: flex;
-    justify-content: center;
+      justify-content: flex-start; /* Align the navigation items to the left on smaller screens */
   }
-  
+
   .menu-items {
-    display: flex;
-    align-items: center;
+      flex-direction: column; /* Stack menu items vertically on smaller screens */
+      align-items: flex-start; /* Align menu items to the left on smaller screens */
   }
-  
+
   .menu-items > .ant-menu-item {
-    margin: 0 10px;
-    background-color: #EEEEEE; /* Background color for menu items */
+      margin: 10px 0; /* Adjust margin for stacked menu items */
   }
-  
-  .menu-items .ant-menu-item-selected {
-    background-color: #FF597B; /* Background color for the selected menu item */
-  }
+}
+
 
