@@ -27,7 +27,7 @@ export const searchReducer = handleActions(
             isError: true,
             searchQuery: action.payload.searchQuery,
             error: action.payload.error,
-            tickets: [],
+            tickets: null,
         })
     },
     InitialState

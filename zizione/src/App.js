@@ -8,6 +8,7 @@ import Application from './components/Application';
 import { AuthProvider } from './components/Providers/auth/AuthProvider';
 import {ErrorBoundary} from 'react-error-boundary';
 import FetchError from './components/FetchError';
+import Register from './components/Register';
 
 function App() {
   
@@ -38,8 +39,16 @@ function App() {
         exact path='/application' element={<Application/>}>
 
         </Route>
+        <Route
+        exact path='/register' element={<Register/>}>
 
+        </Route>
+        <Route
+          exact path='/FetchError' element={<FetchError/>}>
+        </Route>
         </Routes>
+
+
    
     </Router>
 

@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
                     },
                     body: JSON.stringify({ ...credentials }),
                 });
-                //console.log("response: ", response);
+                
                 if (!response.ok) {
                     throw new Error('Network response was not ok')
                 }
@@ -33,8 +33,6 @@ const AuthProvider = ({ children }) => {
                
                  const result = await response.json();
                     console.log("result: ", result);
-               //  login(dispatch, result.result.accessToken);
-                //navigate('/application');
                 localStorage.setItem('authToken', result.result.accessToken);
                 window.location.href = '/application';
             } catch (error) {

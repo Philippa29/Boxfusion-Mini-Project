@@ -2,7 +2,7 @@ import '../styles/Application.css'
 
 import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import {Form,Input,Radio,Upload,Modal, Button} from 'antd';
+import {Form,Input,Radio,Upload , Button} from 'antd';
 import RequireAuth from './RequireAuth';
 import { useState } from 'react';
 

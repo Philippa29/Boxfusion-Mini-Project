@@ -1,9 +1,10 @@
 import "../styles/Tickets.css"
 import React, { useState, useEffect } from 'react';
-import { Input, Card } from 'antd';
+import { Input, Card, message } from 'antd';
 import LoadingSpinner from './Loading';
 import { SearchStateContext, SearchActionContext } from './Providers/search/context';
 import { useContext } from 'react';
+
 
 const { Search } = Input;
 
@@ -11,8 +12,7 @@ const Tickets = () => {
   const { state } = useContext(SearchStateContext);
   const { onSearch } = useContext(SearchActionContext);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchPerformed, setSearchPerformed] = useState(false);
-  const [tickets, setTickets] = useState([]);
+  const [isValidNationalId, setIsValidNationalId] = useState(false);
 
 
 
@@ -22,13 +22,19 @@ const Tickets = () => {
     { id: 3, name: 'Fitness Of Driver' },
     { id: 4, name: 'Fitness Of Vehicle' },
   ];
-
+  //const isValidNationalId ; 
   const handleSearch = async (searchQuery) => {
     try {
       await onSearch( searchQuery);
-      
+      message.success('Search performed');
+      setIsValidNationalId(/^\d{13}$/.test(searchQuery)); 
+      //console.log('isValidID: ',isValidNationalId)
+      // console.log('SearchQuery:', state?.searchQuery);
+      // console.log('Tickets:', state?.tickets);
+      // console.log('Tickets Length:', state?.tickets?.length);
+      // console.log('Search Performed:', state?.searchPerformed);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      window.location.href = '/Fetcherror';
     }
   };
 
@@ -37,10 +43,12 @@ const Tickets = () => {
     return foundType ? foundType.name : 'Unknown Type';
   };
 
-    console.log('in ticket', state)
-
-  const isValidNationalId = /^\d{13}$/.test(searchQuery);
-  
+    //console.log('in ticket', state.tickets)
+    useEffect(() => {
+      console.log('State changed:', state);
+    }, [state]);
+    
+ 
   //console.log(state)
   return (
     <div>
@@ -51,35 +59,43 @@ const Tickets = () => {
           enterButton="Search"
           size="large"
           onChange={(e) => setSearchQuery(e.target.value)}
-          onSearch={() => handleSearch(searchQuery)}
+          onSearch={(query) => handleSearch(query)}
+          
         />
       </div>
+
       <div id="ticket-container">
-        {!isValidNationalId && state?.isInProgress ? (
-          <p>Invalid National ID</p>
-        ) : (
+      {/* {first case: if its not a  valid id } */}
+  {!isValidNationalId && state?.isSuccess ? (
+    < p>Invalid National ID</p>
+  ) : (
           <>
+            {/* while we wait for the async  */}
             {state?.isInProgress ? (
-              <LoadingSpinner />
+            <LoadingSpinner />
+        ) : (
+        <>
+        {/* check if the query has been performed and we recevied the array of tickets if not null */}
+            {state?.searchQuery && state?.tickets ? (
+              // check if the tickets are available
+            state.tickets.length > 0 && state?.isSuccess ? (
+            state.tickets.map((ticket, i) => (
+                <Card key={i} id="ticket" cover={<img id="drivers" alt="example" src="./car.png" />}>
+                  <h1>{mapTicketType(ticket.ticketType)}</h1>
+                  <p>Amount: {ticket.amount}</p>
+                  <p>Points: {ticket.points}</p>
+                </Card>
+              ))
             ) : (
-              <>
-                {state?.searchQuery && state?.tickets && state?.tickets.length ? (
-                  state.tickets.map((ticket, i) => (
-                    <Card key={i} id="ticket" cover={<img id="drivers" alt="example" src="./car.png" />}>
-                      <h1>{mapTicketType(ticket.ticketType)}</h1>
-                      <p>Amount: {ticket.amount}</p>
-                      <p>Points: {ticket.points}</p>
-                    </Card>
-                  ))
-                ) : null}
-                {state?.searchPerformed && !state?.tickets?.length && (
-                  <p>No tickets available</p>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </div>
+              // Display this message when there are no tickets available
+              <p>No tickets available</p>
+            )
+          ) : null}
+        </>
+      )}
+    </>
+  )}
+</div>
     </div>
   );
 };

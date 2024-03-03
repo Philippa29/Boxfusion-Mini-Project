@@ -1,5 +1,5 @@
 import '../styles/SignIn.css';
-import { Form,Input,Button  } from 'antd'; 
+import { Form,Input,Button, message  } from 'antd'; 
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import {  useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -8,19 +8,14 @@ import { useErrorBoundary } from 'react-error-boundary';
 import FetchError from './FetchError';
 
 
-const SignIn = ({setShowNavbar}) =>  {
+
+
+const SignIn = () =>  {
     const authToken = localStorage.getItem('authToken');
 const navigate = useNavigate();
 const [credentials, setCredentials] = useState({userNameOrEmailAddress: '', password: '',rememberClient: true});
 const [error, setError] = useState(null);
-
-const {showBoundary} = useErrorBoundary();
-
-
-
-    
-    
-    const { login } = useAuthActions();
+const { login } = useAuthActions();
 
   
 if(error){
@@ -28,8 +23,6 @@ if(error){
 }
 else
 {
-
-
 
     
 
@@ -86,12 +79,14 @@ return (<div className='body'>
                 </Form.Item>
                 <Form.Item>
                 
-                <Button onClick={ ()=> authToken? <Navigate to="/" />: login } id='button' type="primary" htmlType="submit" className="login-form-button">
+                <Button onClick={ ()=> authToken  ? <Navigate to="/" />:  message.error('Wrong username or password!') } id='button' type="primary" htmlType="submit" className="login-form-button">
                 Sign in
                 </Button>
                 
                 </Form.Item>
-                  
+                
+               
+               
                 </Form>
                 
               

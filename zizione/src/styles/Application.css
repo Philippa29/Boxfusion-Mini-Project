@@ -1,5 +1,3 @@
-
-
 #Input{
     width: 300px;
 }
@@ -25,3 +23,36 @@
   #button:hover{
     background-color: #fe849c;
   }
+
+  /* Responsive styles */
+@media only screen and (max-width: 767px) {
+  #application {
+    height: auto;
+    flex-direction: column;
+    margin-left: 0 auto;
+  }
+
+  #application #Input {
+    width: 50%;
+  }
+
+  .login-form-button {
+    width: 40%;
+  }
+}
+
+/* Responsive styles for phones */
+@media only screen and (max-width: 480px) {
+  #application {
+    width: 80%;
+    margin: 20px auto; /* Adjust margin for better spacing */
+  }
+
+  #application #Input {
+    width: 70%;
+  }
+
+  .login-form-button {
+    width: 70%;
+  }
+}

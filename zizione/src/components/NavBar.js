@@ -1,4 +1,4 @@
-import React , {useState} from 'react'; 
+
 import { HomeFilled,SearchOutlined, UserOutlined,ProfileFilled} from '@ant-design/icons';
 import '../styles/NavBar.css'
 import { Menu } from 'antd';
@@ -15,17 +15,18 @@ const NavBar = () => {
             label: <Link to="/ticket">Ticket</Link>, 
             key: 'Ticket', 
             icon: <SearchOutlined/> 
-        }, 
+        },
+        {
+          label:<Link to="/register">Register</Link>, 
+          key: 'Register', 
+          icon: <ProfileFilled /> 
+      }, 
+
         {
             label:<Link to="/signin">Sign in</Link>, 
             key: 'Sign in', 
             icon: <UserOutlined/> 
         },
-    //     {
-    //       label:<Link to="/application">Application</Link>, 
-    //       key: 'Application', 
-    //       icon: <ProfileFilled /> 
-    //   }
 
 
     ] 

@@ -1,6 +1,6 @@
-import { FallbackProps } from "react-error-boundary";
 import { Button, Result } from "antd";
-import {Link} from 'react-router-dom';
+import { Navigate } from "react-router-dom";
+
 
 export function FetchError(FallbackProps) {
     
@@ -14,8 +14,9 @@ export function FetchError(FallbackProps) {
       subTitle="Sorry, something went wrong."
       extra={
         <>
-          <Button type="primary" >
-            Back Home
+          <Button type="primary"
+          onClick = {() => window.location.href = '/'}>
+            Back Home 
           </Button>
           
         </>

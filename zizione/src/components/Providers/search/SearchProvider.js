@@ -3,6 +3,7 @@ import searchReducer from './reducer';
 import { InitialState } from './context';
 import { SearchStateContext, SearchActionContext } from './context';
 import { getSearch, getSearchSuccess, getSearchError } from './action';
+import FetchError from '../../FetchError';
 
 export const SearchProvider = ({ children }) => {
   const [state, dispatch] = useReducer(searchReducer, InitialState);
@@ -20,9 +21,9 @@ export const SearchProvider = ({ children }) => {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         },
       });
-
+      console.log('response', response);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        return <FetchError />;
       }
 
       
@@ -41,8 +42,10 @@ export const SearchProvider = ({ children }) => {
     } catch (error) {
       // Change state to isProgress false and isError true
       //dispatch({ type: "GET_SEARCH_ERROR", payload: { searchQuery } });
+      console.log('error', error);
       dispatch(getSearchError(searchQuery, error));
-      console.error('Error fetching data:', error);
+      window.onload(<FetchError />);
+      //console.error('Error fetching data:', error);
     }
   };
 
