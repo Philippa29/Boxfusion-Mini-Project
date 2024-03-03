@@ -1,6 +1,6 @@
 import SignIn from './components/SignIn';
 import LandingPage from './components/LandingPage'
-
+import { SearchProvider } from './components/Providers/search/SearchProvider';
 import NavBar from './components/NavBar';
 import Tickets from './components/Tickets'; 
 import { BrowserRouter as Router , Routes , Route } from 'react-router-dom'
@@ -24,10 +24,12 @@ function App() {
           exact path='/' element={<LandingPage />}> 
           </Route>
         
-        <Route
-        exact path='/ticket' element={<Tickets/>}>
-
-        </Route>
+          <Route
+          exact path='/ticket'
+          element={
+          <SearchProvider>
+      <Tickets />
+    </SearchProvider>}/>
         <Route
         exact path='/signin' element={<SignIn/>}>
 

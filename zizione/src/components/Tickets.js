@@ -1,15 +1,20 @@
 import "../styles/Tickets.css"
-import React, {  useState, useEffect } from 'react';
-import { Input , Card} from 'antd';
-import RequireAuth from './RequireAuth';
+import React, { useState, useEffect } from 'react';
+import { Input, Card } from 'antd';
+import LoadingSpinner from './Loading';
+import { SearchStateContext, SearchActionContext } from './Providers/search/context';
+import { useContext } from 'react';
 
+const { Search } = Input;
 
-
-const {Search } = Input; 
 const Tickets = () => {
+  const { state } = useContext(SearchStateContext);
+  const { onSearch } = useContext(SearchActionContext);
   const [searchQuery, setSearchQuery] = useState('');
-  const [tickets, setTickets] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [tickets, setTickets] = useState([]);
+
+
 
   const ticketTypeRefList = [
     { id: 1, name: 'None' },
@@ -18,46 +23,25 @@ const Tickets = () => {
     { id: 4, name: 'Fitness Of Vehicle' },
   ];
 
-  const mapTicketType = (typeId) => {
-    const foundType = ticketTypeRefList.find((type) => type.id === typeId);
-    return foundType ? foundType.name : 'Unknown Type';
-  };
-
-  
-
-
-
-
-  const onSearch = async () => {
+  const handleSearch = async (searchQuery) => {
     try {
-      // Perform search-related logic here
-      // Example: Fetch tickets based on the searchQuery
-      const response = await fetch(`https://localhost:44311/api/services/app/Ticket/GetByNationalId?nationalId=${searchQuery}`, {
-        method: 'GET',
-        headers: {
-          'Authorization' : `Bearer ${localStorage.getItem('authToken')}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const jsonresponse = await response.json();
-      console.log("result", jsonresponse.result);
-      setTickets(jsonresponse.result); // Update the tickets based on the search results
-      setSearchPerformed(true);
+      await onSearch( searchQuery);
+      
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
+  const mapTicketType = (typeId) => {
+    const foundType = ticketTypeRefList.find((type) => type.id === typeId);
+    return foundType ? foundType.name : 'Unknown Type';
+  };
+
+    console.log('in ticket', state)
+
   const isValidNationalId = /^\d{13}$/.test(searchQuery);
-
-
-  //   return <p>Invalid National ID</p>
-  // }
-
+  
+  //console.log(state)
   return (
     <div>
       <div id="search">
@@ -67,36 +51,40 @@ const Tickets = () => {
           enterButton="Search"
           size="large"
           onChange={(e) => setSearchQuery(e.target.value)}
-          onSearch={onSearch}
+          onSearch={() => handleSearch(searchQuery)}
         />
       </div>
       <div id="ticket-container">
-        {!isValidNationalId && searchPerformed ? (
+        {!isValidNationalId && state?.isInProgress ? (
           <p>Invalid National ID</p>
         ) : (
           <>
-            {searchQuery && tickets && tickets.length ? (
-              tickets.map((ticket, i) => (
-                <Card key={i} id="ticket" cover={<img id="drivers" alt="example" src="./car.png" />}>
-                  <h1>{mapTicketType(ticket.ticketType)}</h1>
-                  <p>Amount: {ticket.amount}</p>
-                  <p>Points: {ticket.points}</p>
-                </Card>
-              ))
-            ) : null}
-            {searchPerformed && !tickets.length && (
-              <p>No tickets available</p>
+            {state?.isInProgress ? (
+              <LoadingSpinner />
+            ) : (
+              <>
+                {state?.searchQuery && state?.tickets && state?.tickets.length ? (
+                  state.tickets.map((ticket, i) => (
+                    <Card key={i} id="ticket" cover={<img id="drivers" alt="example" src="./car.png" />}>
+                      <h1>{mapTicketType(ticket.ticketType)}</h1>
+                      <p>Amount: {ticket.amount}</p>
+                      <p>Points: {ticket.points}</p>
+                    </Card>
+                  ))
+                ) : null}
+                {state?.searchPerformed && !state?.tickets?.length && (
+                  <p>No tickets available</p>
+                )}
+              </>
             )}
           </>
         )}
       </div>
- 
-        
-
     </div>
   );
 };
 
 export default Tickets;
+
    
 

@@ -1,5 +1,3 @@
-import { FETCH_DATA_SUCCESS, FETCH_DATA_FAILURE } from "./actions";
-
 const initialState = {
     isAuthenticated: false,
     authToken: null,
